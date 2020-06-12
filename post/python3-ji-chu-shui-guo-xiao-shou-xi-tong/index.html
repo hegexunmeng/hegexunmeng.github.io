@@ -2,17 +2,24 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>2020年6月12日07:45:47 | Gridea</title>
+<title>Python3基础 水果销售系统 | Gridea</title>
 <link rel="shortcut icon" href="https://hegexunmeng.github.io//favicon.ico?v=1591931861525">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://hegexunmeng.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="2020年6月12日07:45:47 | Gridea - Atom Feed" href="https://hegexunmeng.github.io//atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Python3基础 水果销售系统 | Gridea - Atom Feed" href="https://hegexunmeng.github.io//atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="开始好好学习😀
-" />
+    <meta name="description" content="
+#!/usr/bin/python
+-- coding: utf-8 --
+import json
+def write_json(file_name):
+stocklist = {
+'苹果': 10,
+'香蕉': 10,
+'雪梨': 10..." />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -75,25 +82,116 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              2020年6月12日07:45:47
+              Python3基础 水果销售系统
             </h2>
             <div class="post-info">
               <span>
                 2020-06-12
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>开始好好学习😀</p>
+                <!-- sale_system_prepare.py -->
+<p>#!/usr/bin/python</p>
+<h1 id="-coding-utf-8-">-<em>- coding: utf-8 -</em>-</h1>
+<p>import json</p>
+<p>def write_json(file_name):<br>
+stocklist = {<br>
+'苹果': 10,<br>
+'香蕉': 10,<br>
+'雪梨': 10,<br>
+}<br>
+with open(file_name, 'w', encoding='utf-8') as ob:<br>
+# 解决存入中文乱码ensure_ascii=False<br>
+json.dump(stocklist, ob, ensure_ascii=False)</p>
+<p>if <strong>name</strong> == '<strong>main</strong>':<br>
+file_name = 'stock.json'<br>
+write_json(file_name)</p>
+<!-- sale system.py -->
+<p>#!/usr/bin/python</p>
+<h1 id="-coding-utf-8--2">-<em>- coding: utf-8 -</em>-</h1>
+<p>import json<br>
+from sale_system_prepare import write_json</p>
+<h1 id="数据初始化">数据初始化</h1>
+<p>file_name = 'stock.json'<br>
+write_json(file_name)</p>
+<p>print('欢迎来到英俊杂货店')</p>
+<h1 id="读取数据">读取数据</h1>
+<p>with open(file_name, 'r', encoding='utf-8') as ob:<br>
+fruits = json.load(ob)<br>
+print(&quot;名称&quot; + &quot;\t&quot; + &quot;数量&quot;)<br>
+fruits = dict(fruits)<br>
+for k, v in fruits.items():<br>
+print(k + '\t' + str(v))</p>
+<pre><code>while True:
+    # 买的水果种类
+    print(&quot;输入‘q'可以退出&quot;)
+    fruit_list = []
+    for k, v in fruits.items():
+        fruit_list.append(k)
+    fruit_list = str(fruit_list)
+    fruit_name = input('输入要购买的水果，可选择' + fruit_list)
+    if fruit_name == 'q':
+        print(&quot;欢迎下次再来&quot;)
+        break
+    # 只有购买的水果名字在清单上时
+    elif fruit_name in fruits.keys():
+        # 买的数量
+        while True:
+            fruit_num = input('输入要购买的数量1-10:')
+            if fruit_num.isdigit():
+                # 输入只有数字
+                if int(fruit_num) &lt; 1 or int(fruit_num) &gt; 10:
+                    print('请输入数字1-10')
+                    continue
+                elif 0 &lt; int(fruit_num) &lt;= 10:
+                    print(&quot;你已购买&quot; + str(fruit_num) + &quot;个&quot; + fruit_name)
+                    # 更新水果数量
+                    old_fruit_num = int(fruits[fruit_name])
+                    new_fruit_num = old_fruit_num - int(fruit_num)
+                    fruits[fruit_name] = new_fruit_num
+                    print(fruit_name+&quot;还剩: &quot; + str(new_fruit_num) + ' 个')
+                    if new_fruit_num == 0:
+                        print(fruit_name + ' 已售罄')
+                        # fruits[fruit_name] = '已售罄'
+                        del fruits[fruit_name]
+                    break
+            else:
+                # 输入不是纯数字
+                if fruit_num == 'q':
+                    break
+                else:
+                    print('请只输入数字')
+                    continue
+    else:
+        print('本店暂时没有叫' + fruit_name + '的水果')
+        continue
+</code></pre>
+<p>print(&quot;本店剩余&quot;)<br>
+print(&quot;名称&quot; + &quot;\t&quot; + &quot;数量&quot;)<br>
+fruits = dict(fruits)<br>
+for k, v in fruits.items():<br>
+print(k + '\t' + str(v))</p>
+<h1 id="提交数据">提交数据</h1>
+<p>with open(file_name, 'w', encoding='utf-8') as ob:<br>
+# 解决存入中文乱码ensure_ascii=False<br>
+json.dump(fruits, ob, ensure_ascii=False)</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#-coding-utf-8-">-<em>- coding: utf-8 -</em>-</a></li>
+<li><a href="#-coding-utf-8--2">-<em>- coding: utf-8 -</em>-</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%88%9D%E5%A7%8B%E5%8C%96">数据初始化</a></li>
+<li><a href="#%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE">读取数据</a></li>
+<li><a href="#%E6%8F%90%E4%BA%A4%E6%95%B0%E6%8D%AE">提交数据</a></li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -102,9 +200,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://hegexunmeng.github.io/post/hello-gridea/">
+            <a href="https://hegexunmeng.github.io/post/2020-nian-6-yue-12-ri-074547/">
               <h3 class="post-title">
-                Hello Gridea
+                2020年6月12日07:45:47
               </h3>
             </a>
           </div>
